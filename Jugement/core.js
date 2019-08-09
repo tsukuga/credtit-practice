@@ -13,7 +13,7 @@ export default class core {
 
       // 使用中の卒業要件
       presentYouken = Youken[i];
-   
+
 
       // 必修科目でなければ、次のグループへ
       if (isHissyuukamoku(presentYouken.category1_min)) return;
@@ -46,7 +46,7 @@ export default class core {
         if (isMaching) {
 
           // 一致した場合その成績をresultに格納
-          MakeResult(presentYouken, presentScore, category,result);
+          MakeResult(presentYouken, presentScore, category, result);
 
           //判定した成績を削除
           score.splice(j, 1);
@@ -63,7 +63,7 @@ export default class core {
 
       // 使用中の卒業要件
       presentYouken = Youken[i];
-    
+
 
       //  成績データをループさせる
       score_loop: for (let j = 0; j < score.length; j++) {
@@ -71,13 +71,13 @@ export default class core {
         // 使用中の成績データ
         presentScore = score[j];
         presentCategory = category[presentYouken.No];
- 
+
         // カテゴリーの上限判定
-        if (presentCategory.category1_sum >= presentYouken.category1_max) { 
+        if (presentCategory.category1_sum >= presentYouken.category1_max) {
           break;
         };
         // グループの上限判定
-        if (presentYouken.group_sum >= presentYouken.credit_max) { 
+        if (presentYouken.group_sum >= presentYouken.credit_max) {
           break;
         }
 
@@ -98,7 +98,7 @@ export default class core {
         if (isMaching) {
 
           // 一致した場合その成績をresultに格納
-          MakeResult(presentYouken, presentScore, category,result);
+          MakeResult(presentYouken, presentScore, category, result);
 
           //判定した成績を削除
           score.splice(j, 1);
