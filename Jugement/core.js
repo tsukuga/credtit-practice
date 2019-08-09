@@ -1,4 +1,4 @@
-export default class core {
+export default class Core {
 
   core(Youken, score, category) {
 
@@ -10,7 +10,7 @@ export default class core {
     for (let i = 0; i < Youken.length - 2; i++) {
 
       // 使用中の卒業要件
-      presentYouken = Youken[i];
+      let presentYouken = Youken[i];
 
 
       // 必修科目でなければ、次のグループへ
@@ -60,7 +60,7 @@ export default class core {
     for (let i = 0; i < Youken.length - 2; i++) {
 
       // 使用中の卒業要件
-      presentYouken = Youken[i];
+      let presentYouken = Youken[i];
 
 
       //  成績データをループさせる
@@ -111,6 +111,11 @@ export default class core {
 
   }
 
+  // 必修科目判定メソッド
+  isHissyuukamoku(e){
+    e.group_min
+  }
+
   // 除外判定メソッド
   isRemove(remove, score) {
 
@@ -157,8 +162,7 @@ export default class core {
     Youken.group_sum = ++parseFloat(score.credit);
     category[Youken.No].category1_sum = ++parseFloat(score.credit);
 
-    result[count] = Youken.category1, Youken.category2, Youken.category3, Youken.about,
-      score.number, score.name, score.credit;
+    result[count] = Youken.category1, Youken.category2, Youken.category3, Youken.about,score.number, score.name, score.credit;
 
     count++;
 

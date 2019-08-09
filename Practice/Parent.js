@@ -19,7 +19,7 @@ export default class Parent extends React.Component {
           '単位数': "",
           '成績': ""
         },
-       
+
       ],
       Syozoku: '',
     }
@@ -45,18 +45,19 @@ export default class Parent extends React.Component {
     return (
       <React.Fragment>
 
-
         <Child add={this.Getchild.bind(this)} value={this.state.Prescore} />
 
         <FileForm hoge={this.Getchildscore.bind(this)} />
 
         <MakeList getselected={this.GetselectedList.bind(this)} />
-     
-       
+
+
         <button className="show" type="buttun"
-          onClick={() => (console.table(this.state.score))}>show</button>
+          onClick={() => (console.log(this.state.score))}>show</button>
+
+        <button className="show" type="buttun"
+          onClick={() => (console.table(this.state.score))}>get</button>
       </React.Fragment>
     )
   }
-
 }
