@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Jugementfunc from './jugment'
+import MakeCategory from './makecategory'
 
 export default class Practice extends React.Component {
 
@@ -21,15 +21,17 @@ export default class Practice extends React.Component {
 
   render() {
 
-    let jugement = new Jugementfunc(this.state.data,this.state.value)
+    let Newcategory = new MakeCategory(this.state.data,this.state.value)
     
-    let result = jugement.jugement();
+    let result = Newcategory.makeCategory();
 
     return (
+
       <div>
       <div onClick={()=>(console.table(result.Youken))}>{'マスターカテゴリー'}</div>
       <div onClick={()=>(console.table(result.category))}>{'ヘッダカテゴリー'}</div>
       </div>
+      
     )
   }
 

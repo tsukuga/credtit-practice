@@ -1,6 +1,6 @@
 import FileFunc from './CreateFrom/filefn'
 import Lists from '../CreateList/List'
-export default class Jugementfunc {
+export default class MakeCategory {
 
 
 
@@ -9,19 +9,19 @@ export default class Jugementfunc {
     this.Syozoku = Syozoku;
   }
 
-  jugement() {
+  makeCategory() {
 
     let List = new Lists();
 
     // 選択した所属から卒業要件を取得
     let Youken = List.GetList()[this.Syozoku];
 
-    return this.makeCategory(Youken);
+    return this.createCategory(Youken);
 
   }
   
   // 要件に同じカテゴリーごとに番号をフルメソッド
-  makeCategory(e) {
+  createCategory(e) {
 
     let del_number = 0;
     let category = e.concat();
@@ -53,7 +53,6 @@ export default class Jugementfunc {
       };
     };
 
-    
     return {Youken:e,category}
   }
 

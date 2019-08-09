@@ -1,7 +1,5 @@
 export default class core {
 
-
-
   core(Youken, score, category) {
 
     // 結果を入れるメソッド
