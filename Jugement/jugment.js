@@ -28,8 +28,11 @@ export default class Jugementfunc {
     let M_category = e.concat();
 
     for (let i = 0; i < category.length-1; i++) {
+
       for (let j = i + 1; j < category.length-1; j++) {
+
         M_category[i + del_number].No = i;
+
         if (j > i + 2) { //最適化ポイント
           break;
         };
@@ -39,7 +42,9 @@ export default class Jugementfunc {
         const check3 = category[i].category3 === category[j].category3;
 
         if (check1 && check2 && check3) {
-          M_category[j + del_number].No = i;
+
+          // M_category[j + del_number].No = i;
+          e[j + del_number].No = i;
           del_number++
           category.splice(j, 1);
           j--;
@@ -47,7 +52,9 @@ export default class Jugementfunc {
 
       };
     };
-    return category;
+
+    
+    return {Youken:e,category}
   }
 
 

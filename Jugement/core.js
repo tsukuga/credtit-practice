@@ -1,25 +1,31 @@
 export default class core {
 
-  jugement() {
+
+
+  core(Youken, score, category) {
+
+    // 結果を入れるメソッド
+    let result;
+    let count = 0;
 
     // 卒業要件をループさせる
     for (let i = 0; i < Youken.length - 2; i++) {
-      
+
       // 使用中の卒業要件
       presentYouken = Youken[i];
+   
 
       // 必修科目でなければ、次のグループへ
       if (isHissyuukamoku(presentYouken.category1_min)) return;
 
       //  成績データをループさせる
       score_loop: for (let j = 0; j < score.length; j++) {
-      
-      // 使用中の成績データ
-      presetntScore = score[j];
+
+        // 使用中の成績データ
+        presentScore = score[j];
 
         // グループの合計単位数が卒業要件の取得単位数の下限を満たしたか判定
         let isFull = presentYouken.category1_min <= presentYouken.category1_sum;
-
         // 満たしていた場合成績ループを終了
         if (isFull) break;
 
@@ -36,14 +42,75 @@ export default class core {
         // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝未実装＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 
         // 成績が卒業要件に当てはまるかの検証
-        let isMaching = Match(presetntScore,presentYouken.name,presentYouken.number);
+        let isMaching = Match(presentScore, presentYouken.name, presentYouken.number);
+        if (isMaching) {
 
-        if(isMaching){
-          MakeResult();
+          // 一致した場合その成績をresultに格納
+          MakeResult(presentYouken, presentScore, category, M_category, result);
+
+          //判定した成績を削除
+          score.splice(j, 1);
+          j--;
+
           break;
+
         }
       }
     }
+
+    // 卒業要件をループさせる
+    for (let i = 0; i < Youken.length - 2; i++) {
+
+      // 使用中の卒業要件
+      presentYouken = Youken[i];
+    
+
+      //  成績データをループさせる
+      score_loop: for (let j = 0; j < score.length; j++) {
+
+        // 使用中の成績データ
+        presentScore = score[j];
+        presentCategory = category[presentYouken.No];
+ 
+        // カテゴリーの上限判定
+        if (presentCategory.category1_sum >= presentYouken.category1_max) { 
+          break;
+        };
+        // グループの上限判定
+        if (presentYouken.group_sum >= presentYouken.credit_max) { 
+          break;
+        }
+
+        // 要件の除外項目に該当するかの判定
+        if (isRemove(presentYouken.remove, score[j])) {
+          continue score_loop;
+        }
+
+        // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝未実装＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+        // // 要件の制限要素に該当するかの判定
+        // if(isRestriction(Youken[i].restriction,score[j])){
+        //   continue score_loop;
+        // }
+        // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝未実装＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+        // 成績が卒業要件に当てはまるかの検証
+        let isMaching = Match(presentScore, presentYouken.name, presentYouken.number);
+        if (isMaching) {
+
+          // 一致した場合その成績をresultに格納
+          MakeResult(presentYouken, presentScore, category, M_category, result);
+
+          //判定した成績を削除
+          score.splice(j, 1);
+          j--;
+
+          break;
+
+        }
+      }
+    }
+
+
   }
 
   // 除外判定メソッド
@@ -65,45 +132,39 @@ export default class core {
 
   }
 
-  Match(score,number,name) {
+  Match(score, number, name) {
 
     // 科目番号のマッチング 
-    for (let k = 0; k < number.length; k++){
+    for (let k = 0; k < number.length; k++) {
 
-     number_exp = new RegExp('(^)' + number[k]);
-     let isMatch = number_exp.test(score.number);
-     
-     if(isMatch) return ture;
+      number_exp = new RegExp('(^)' + number[k]);
+      let isMatch = number_exp.test(score.number);
+
+      if (isMatch) return ture;
     }
 
     // 科目名のマッチング
-    for (let k = 0; k < name.length; k++){
-    
-     name_exp = new RegExp('(^)' + name[k]);
-     let isMatch = name_exp.test(score.name);
-     
-     if(isMatch) return ture;
+    for (let k = 0; k < name.length; k++) {
+
+      name_exp = new RegExp('(^)' + name[k]);
+      let isMatch = name_exp.test(score.name);
+
+      if (isMatch) return ture;
     }
-    
-    if (e) {
 
-      Youken[i].group_sum = ++parseFloat(score[j].credit);
-      category[M_category[i].No].category_sum = ++parseFloat(score[j].credit);
+  }
 
-      result[count] = [page[i].class1, page[i].class2, page[i].class3, page[i].about,
-      score[j].number, score[j].name, score[j].credit];
+  MakeResult(Youken, score, category, result, count) {
 
-    }
-}
-  MakeResult(Youken,score){
+    Youken.group_sum = ++parseFloat(score.credit);
+    category[Youken.No].category1_sum = ++parseFloat(score.credit);
 
-      Youken.group_sum = ++parseFloat(score.credit);
-      category[M_category[i].No].category_sum = ++parseFloat(score.credit);
+    result[count] = Youken.category1, Youken.category2, Youken.category3, Youken.about,
+      score.number, score.name, score.credit;
 
-      result[count] = [page[i].class1, page[i].class2, page[i].class3, page[i].about,
-      score[j].number, score[j].name, score[j].credit];
+    count++;
 
-    }
+  }
 
 }
 

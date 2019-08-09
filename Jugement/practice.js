@@ -26,7 +26,10 @@ export default class Practice extends React.Component {
     let result = jugement.jugement();
 
     return (
-      <div onClick={()=>(console.table(result))}>{'aaaa'}</div>
+      <div>
+      <div onClick={()=>(console.table(result.Youken))}>{'マスターカテゴリー'}</div>
+      <div onClick={()=>(console.table(result.category))}>{'ヘッダカテゴリー'}</div>
+      </div>
     )
   }
 
