@@ -46,7 +46,7 @@ export default class core {
         if (isMaching) {
 
           // 一致した場合その成績をresultに格納
-          MakeResult(presentYouken, presentScore, category, M_category, result);
+          MakeResult(presentYouken, presentScore, category,result);
 
           //判定した成績を削除
           score.splice(j, 1);
@@ -98,7 +98,7 @@ export default class core {
         if (isMaching) {
 
           // 一致した場合その成績をresultに格納
-          MakeResult(presentYouken, presentScore, category, M_category, result);
+          MakeResult(presentYouken, presentScore, category,result);
 
           //判定した成績を削除
           score.splice(j, 1);
