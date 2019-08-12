@@ -14,13 +14,13 @@ export default class Core {
 
 
       // 必修科目でなければ、次のグループへ
-      if (isHissyuukamoku(presentYouken.category1_min)) return;
+      if (this.isHissyuukamoku(presentYouken.category1_min)) return;
 
       //  成績データをループさせる
       score_loop: for (let j = 0; j < score.length; j++) {
 
         // 使用中の成績データ
-        presentScore = score[j];
+       let presentScore = score[j];
 
         // グループの合計単位数が卒業要件の取得単位数の下限を満たしたか判定
         let isFull = presentYouken.category1_min <= presentYouken.category1_sum;
@@ -28,7 +28,7 @@ export default class Core {
         if (isFull) break;
 
         // 要件の除外項目に該当するかの判定
-        if (isRemove(presentYouken.remove, score[j])) {
+        if (this.isRemove(presentYouken.remove, presentScore)) {
           continue score_loop;
         }
 
@@ -40,7 +40,7 @@ export default class Core {
         // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝未実装＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 
         // 成績が卒業要件に当てはまるかの検証
-        let isMaching = Match(presentScore, presentYouken.name, presentYouken.number);
+        let isMaching = this.Match(presentScore, presentYouken.name, presentYouken.number);
         if (isMaching) {
 
           // 一致した場合その成績をresultに格納
@@ -80,7 +80,7 @@ export default class Core {
         }
 
         // 要件の除外項目に該当するかの判定
-        if (isRemove(presentYouken.remove, score[j])) {
+        if (isRemove(presentYouken.remove, score)) {
           continue score_loop;
         }
 
@@ -107,13 +107,15 @@ export default class Core {
         }
       }
     }
-
+    
+    result = 1;
+    return result;
 
   }
 
   // 必修科目判定メソッド
   isHissyuukamoku(e){
-    e.group_min
+    if(e<=0) return true;
   }
 
   // 除外判定メソッド
@@ -125,9 +127,9 @@ export default class Core {
     // 除外要素があった場合はturuを返す
     for (let k = 0; k < remove.length; k++) {
 
-      remove_exp = new RegExp('(^)' + remove[k]);
+      let remove_exp = new RegExp('(^)' + remove[k]);
 
-      let isRemovement = remove_exp.test(score.number) || remove_exp[k].test(score.name)
+      let isRemovement = (remove_exp.test(score.number) || remove_exp.test(score.name))
 
       if (isRemovement) return ture;
 
@@ -140,29 +142,29 @@ export default class Core {
     // 科目番号のマッチング 
     for (let k = 0; k < number.length; k++) {
 
-      number_exp = new RegExp('(^)' + number[k]);
-      let isMatch = number_exp.test(score.number);
+      let number_exp = new RegExp('(^)' + number[k]);
+      let isMatch = number_exp.test(score.科目番号);
 
-      if (isMatch) return ture;
+      if (isMatch) return true;
     }
 
     // 科目名のマッチング
     for (let k = 0; k < name.length; k++) {
 
-      name_exp = new RegExp('(^)' + name[k]);
-      let isMatch = name_exp.test(score.name);
+      let name_exp = new RegExp('(^)' + name[k]);
+      let isMatch = name_exp.test(score.科目名);
 
-      if (isMatch) return ture;
+      if (isMatch) return true;
     }
 
   }
 
   MakeResult(Youken, score, category, result, count) {
 
-    Youken.group_sum = ++parseFloat(score.credit);
-    category[Youken.No].category1_sum = ++parseFloat(score.credit);
+    Youken.group_sum = ++parseFloat(score.単位数);
+    category[Youken.No].category1_sum = ++parseFloat(score.単位数);
 
-    result[count] = Youken.category1, Youken.category2, Youken.category3, Youken.about,score.number, score.name, score.credit;
+    result[count] = Youken.category1, Youken.category2, Youken.category3, Youken.about, score.科目番号, score.科目名, score.単位数;
 
     count++;
 
